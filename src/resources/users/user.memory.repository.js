@@ -1,20 +1,11 @@
-let dB = require('../../common/inMemoryDb');
+const dB = require('../../common/inMemoryDb');
 
-const getAll = async () => dB;
-const get = async (id) => dB.find((user) => user.id === id);
-const create = async (user) => {
-  dB.push(user);
-  return get(user.id);
-};
+const getAll = async () => dB.getAllUsers();
+const get = async (id) => dB.getUser(id);
+const create = async (user) => dB.createUser(user);
 
-const remove = async (id) => {
-  dB=dB.filter((user) => user.id !== id);
-};
+const remove = async (id) => dB.removeUser(id);
 
-const update = async (user) => {
-  remove(user.id);
-  create(user);
-  return get(user.id);
-};
+const update = async (user) => dB.updateUser(user);
 
 module.exports = { getAll, get, create, update, remove };
