@@ -18,7 +18,8 @@ router.route('/').post(async (req, res) => {
 router.route('/:id').get(async (req, res) => {
   const { id } = req.params;
   const user = await usersService.get(id);
-  res.json(User.toResponse(user));
+  if (user) res.json(User.toResponse(user));
+  else res.send(404);
 });
 
 router.route('/:userId').put(async (req, res) => {
@@ -32,7 +33,7 @@ router.route('/:userId').put(async (req, res) => {
 
 router.route('/:userId').delete(async (req, res) => {
   const { userId } = req.params;
-  await usersService.remove(userId)
+  await usersService.remove(userId);
   res.sendStatus(204);
 });
 
