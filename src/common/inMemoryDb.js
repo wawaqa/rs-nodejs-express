@@ -1,20 +1,8 @@
 const User = require('../resources/users/user.model');
+const Board = require('../resources/boards/board.model');
 
-let users = [];
-
-let i = 0;
-
-while (i < 5) {
-  users.push(
-    new User({
-      id: `${i}`,
-      name: `Name${i}`,
-      login: `login${i}`,
-      password: `$pw${i}`,
-    })
-  );
-  i += 1;
-}
+// Users
+let users = [new User(), new User(), new User()];
 
 const getAllUsers = async () => users;
 const getUser = async (id) => users.find((user) => user.id === id);
@@ -31,10 +19,35 @@ const updateUser = async (user) => {
   return getUser(user.id);
 };
 
+// Boards
+let boards = [new Board(), new Board()];
+
+const getAllBoards = async () => boards;
+const getBoard = async (id) => boards.find((board) => board.id === id);
+const createBoard = async (board) => {
+  boards.push(board);
+  return getBoard(board.id);
+};
+
+const removeBoard = async (id) => {
+  boards = boards.filter((user) => user.id !== id);
+};
+
+const updateBoard = async (board) => {
+  removeBoard(board.id);
+  createBoard(board);
+  return getUser(board.id);
+};
+
 module.exports = {
   getAllUsers,
   getUser,
   createUser,
   removeUser,
-  updateUser
+  updateUser,
+  getAllBoards,
+  getBoard,
+  createBoard,
+  removeBoard,
+  updateBoard,
 };
