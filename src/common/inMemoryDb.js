@@ -33,6 +33,9 @@ const createUser = async (user) => {
 };
 const removeUser = async (id) => {
   users = users.filter((user) => user.id !== id);
+  tasks = tasks.map((task) =>
+    task.userId === id ? { ...task, userId: null } : task
+  );
 };
 const updateUser = async (user) => {
   removeUser(user.id);
@@ -50,6 +53,7 @@ const createBoard = async (board) => {
 
 const removeBoard = async (id) => {
   boards = boards.filter((board) => board.id !== id);
+  tasks = tasks.filter((task) => task.boardId !== id);
 };
 
 const updateBoard = async (board) => {
@@ -59,7 +63,8 @@ const updateBoard = async (board) => {
 };
 
 // Tasks
-const getAllTasks = async (boardId) => tasks.filter(it=>it.boardId===boardId);
+const getAllTasks = async (boardId) =>
+  tasks.filter((it) => it.boardId === boardId);
 const getTask = async (id) => tasks.find((task) => task.id === id);
 const createTask = async (task) => {
   tasks.push(task);
