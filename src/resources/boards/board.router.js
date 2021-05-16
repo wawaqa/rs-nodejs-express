@@ -1,5 +1,4 @@
 const router = require('express').Router();
-const Board = require('./board.model');
 const boardsService = require('./board.service');
 
 router.route('/').get(async (req, res) => {
@@ -8,10 +7,8 @@ router.route('/').get(async (req, res) => {
 });
 
 router.route('/').post(async (req, res) => {
-  const { id, title, columns } = req.body;
-  const newBoard = await boardsService.create(
-    new Board({ id, title, columns })
-  );
+  const boardData = req.body;
+  const newBoard = await boardsService.create(boardData);
   res.status(201).json(newBoard);
 });
 
@@ -24,10 +21,8 @@ router.route('/:id').get(async (req, res) => {
 
 router.route('/:boardId').put(async (req, res) => {
   const { boardId } = req.params;
-  const { title, columns } = req.body;
-  const updatedBoard = await boardsService.update(
-    new Board({ id: boardId, title, columns })
-  );
+  const boardData = { ...req.body, id: boardId };
+  const updatedBoard = await boardsService.update(boardData);
   res.json(updatedBoard);
 });
 
