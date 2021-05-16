@@ -13,14 +13,15 @@ const get = async (id) => {
 const create = async (userData) => {
   const { name, login, password } = userData;
   const newUser = new User({ name, login, password });
-  const createdUser=await usersRepo.create(newUser);
-  return User.toResponse(createdUser)
+  const createdUser = await usersRepo.create(newUser);
+  return User.toResponse(createdUser);
 };
 
 const update = (userData) => {
-  const user = new User(userData);
-  const updatedUser=usersRepo.update(user);
-  return User.toResponse(updatedUser)
+  const { name, login, password, id } = userData;
+  const user = new User({ name, login, password, id });
+  const updatedUser = usersRepo.update(user);
+  return User.toResponse(updatedUser);
 };
 const remove = (id) => usersRepo.remove(id);
 

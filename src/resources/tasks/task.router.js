@@ -1,6 +1,5 @@
 const router = require('express').Router();
 const taskService = require('./task.service');
-const Task = require('./task.model');
 
 router.route('/:boardId/tasks/').get(async (req, res) => {
   const { boardId } = req.params;
@@ -10,10 +9,8 @@ router.route('/:boardId/tasks/').get(async (req, res) => {
 
 router.route('/:boardId/tasks/').post(async (req, res) => {
   const { boardId } = req.params;
-  const { id, title, order, description, userId, columnId} = req.body;
-  const newTask = await taskService.create(
-    new Task({ id, title, order, description, userId, boardId, columnId })
-  );
+  const taskData = { ...req.body, boardId };
+  const newTask = await taskService.create(taskData);
   res.status(201).json(newTask);
 });
 
@@ -26,18 +23,8 @@ router.route('/:boardId/tasks/:id').get(async (req, res) => {
 
 router.route('/:boardId/tasks/:taskId').put(async (req, res) => {
   const { taskId, boardId } = req.params;
-  const { title, order, description, userId, columnId } = req.body;
-  const updatedTask = await taskService.update(
-    new Task({
-      id: taskId,
-      title,
-      order,
-      description,
-      userId,
-      boardId,
-      columnId,
-    })
-  );
+  const taskData = { ...req.body, id: taskId, boardId };
+  const updatedTask = await taskService.update(taskData);
   res.json(updatedTask);
 });
 
