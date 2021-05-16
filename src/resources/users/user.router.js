@@ -1,34 +1,29 @@
 const router = require('express').Router();
-const User = require('./user.model');
 const usersService = require('./user.service');
 
 router.route('/').get(async (req, res) => {
   const users = await usersService.getAll();
-  res.json(users.map(User.toResponse));
+  res.json(users);
 });
 
 router.route('/').post(async (req, res) => {
-  const { name, login, password } = req.body;
-  const newUser = await usersService.create(
-    new User({ name, login, password })
-  );
-  res.status(201).json(User.toResponse(newUser));
+  const userData = req.body;
+  const newUser = await usersService.create(userData);
+  res.status(201).json(newUser);
 });
 
 router.route('/:id').get(async (req, res) => {
   const { id } = req.params;
   const user = await usersService.get(id);
-  if (user) res.json(User.toResponse(user));
+  if (user) res.json(user);
   else res.send(404);
 });
 
 router.route('/:userId').put(async (req, res) => {
   const { userId } = req.params;
-  const { name, login, password } = req.body;
-  const updatedUser = await usersService.update(
-    new User({ id: userId, name, login, password })
-  );
-  res.json(User.toResponse(updatedUser));
+  const userData = { ...req.body, id: userId };
+  const updatedUser = await usersService.update(userData);
+  res.json(updatedUser);
 });
 
 router.route('/:userId').delete(async (req, res) => {
