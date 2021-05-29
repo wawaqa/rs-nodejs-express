@@ -18,7 +18,7 @@ router.route('/:id').get(async (req, res) => {
   const { id } = req.params;
   const task = await taskService.get(id);
   if (task) res.json(task);
-  else res.send(404);
+  else res.sendStatus(404);
 });
 
 router.route('/:taskId').put(async (req, res) => {

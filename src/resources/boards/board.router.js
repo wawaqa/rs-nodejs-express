@@ -16,7 +16,7 @@ router.route('/:id').get(async (req, res) => {
   const { id } = req.params;
   const board = await boardsService.get(id);
   if (board) res.json(board);
-  else res.send(404);
+  else res.sendStatus(404);
 });
 
 router.route('/:boardId').put(async (req, res) => {
