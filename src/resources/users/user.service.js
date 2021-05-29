@@ -1,9 +1,8 @@
+/**
+ * @module UserService
+ */
 const usersRepo = require('./user.memory.repository');
 const User = require('./user.model');
-
-/**
- * @typedef {require('./user.model').UserDTO} UserDTO
- */
 
 /**
  * Returns all the users as user data-transfer-objects (without passwords)
@@ -27,7 +26,7 @@ const get = async (id) => {
 };
 
 /**
- * Creates user and returns created user as data-transfer-object
+ * Triggers creating user in DB and returns created user as data-transfer-object
  * @async
  * @param {Object} userData data to create user
  * @param {string} userData.name name for user to create
@@ -43,7 +42,7 @@ const create = async (userData) => {
 };
 
 /**
- * Creates user and returns created user as data-transfer-object
+ * Triggers updating user in DB and returns updated user as data-transfer-object
  * @async
  * @param {Object} userData new user data for user to update
  * @param {uuid} userData.id unique identifier for user to update
@@ -63,7 +62,7 @@ const update = async (userData) => {
  * Removes user with specified id
  * @async
  * @param {uuid} id unique udentifier for user to remove
- * @returns {Promise<undefined>} Promise which resolves to undefined (if no such user found)
+ * @returns {Promise<undefined>} Promise which resolves to undefined
  */
 const remove = async (id) => usersRepo.remove(id);
 

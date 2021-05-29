@@ -1,9 +1,8 @@
-const dB = require('../../common/inMemoryDb');
-
 /**
- * @typedef {require('./user.model').User} User
+ * @module UserRepository
  */
 
+const dB = require('../../common/inMemoryDb');
 
 /**
  * Returns all the users from DB
@@ -24,7 +23,7 @@ const get = async (id) => dB.getUser(id);
  * Creates user in DB
  * @async
  * @param {User} user user to create in db
- * @returns {Promise<User>} Promise which resolves to createdUser
+ * @returns {Promise<User>} Promise which resolves to created user
  */
 const create = async (user) => dB.createUser(user);
 
@@ -40,7 +39,7 @@ const remove = async (id) => dB.removeUser(id);
  * Updates user with specified id
  * @async
  * @param {User} user user to update with new data
- * @returns {Promise<User>}
+ * @returns {Promise<User>} Promise which resolves to updated user
  */
 const update = async (user) => dB.updateUser(user);
 
