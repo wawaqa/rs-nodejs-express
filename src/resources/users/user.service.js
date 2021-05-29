@@ -1,13 +1,13 @@
-const usersRepo = require('./user.memory.repository');
-const User = require('./user.model');
+import { userRepo } from './user.memory.repository.js';
+import User from './user.model.js';
 
 const getAll = async () => {
-  const users = await usersRepo.getAll();
+  const users = await userRepo.getAll();
   return users.map(User.toResponse);
 };
 
 const get = async (id) => {
-  const user = await usersRepo.get(id);
+  const user = await userRepo.get(id);
   if (user) return User.toResponse(user);
   return undefined;
 };
@@ -15,17 +15,17 @@ const get = async (id) => {
 const create = async (userData) => {
   const { name, login, password } = userData;
   const newUser = new User({ name, login, password });
-  const createdUser = await usersRepo.create(newUser);
+  const createdUser = await userRepo.create(newUser);
   return User.toResponse(createdUser);
 };
 
 const update = async (userData) => {
   const { name, login, password, id } = userData;
   const user = new User({ name, login, password, id });
-  const updatedUser = usersRepo.update(user);
+  const updatedUser = userRepo.update(user);
   return User.toResponse(updatedUser);
 };
 
-const remove = async (id) => usersRepo.remove(id);
+const remove = async (id) => userRepo.remove(id);
 
-module.exports = { getAll, get, create, update, remove };
+export const userService = { getAll, get, create, update, remove };

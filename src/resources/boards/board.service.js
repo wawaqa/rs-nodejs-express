@@ -1,5 +1,5 @@
-const boardRepo = require('./board.memory.repository');
-const Board = require('./board.model');
+import {boardRepo} from './board.memory.repository.js';
+import Board from './board.model.js';
 
 const getAll = async () => boardRepo.getAll();
 
@@ -11,7 +11,6 @@ const create = async (boardData) => {
   return boardRepo.create(board);
 };
 
-
 const update = async (boardData) => {
   const { id, title, columns } = boardData;
   const board = new Board({ id, title, columns });
@@ -20,4 +19,5 @@ const update = async (boardData) => {
 
 const remove = async (id) => boardRepo.remove(id);
 
-module.exports = { getAll, get, create, update, remove };
+export const boardService = { getAll, get, create, update, remove };
+

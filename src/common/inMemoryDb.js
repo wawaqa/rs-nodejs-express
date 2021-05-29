@@ -1,6 +1,6 @@
-const User = require('../resources/users/user.model');
-const Board = require('../resources/boards/board.model');
-const Task = require('../resources/tasks/task.model');
+import User from '../resources/users/user.model.js';
+import Board from '../resources/boards/board.model.js';
+import Task from '../resources/tasks/task.model.js';
 
 // initial state
 let boards = [
@@ -61,7 +61,6 @@ const getAllBoards = async () => boards;
 
 const getBoard = async (id) => boards.find((board) => board.id === id);
 
-
 const createBoard = async (board) => {
   boards.push(board);
   return getBoard(board.id);
@@ -100,7 +99,7 @@ const updateTask = async (task) => {
   return getTask(task.id);
 };
 
-module.exports = {
+const dB = {
   getAllUsers,
   getUser,
   createUser,
@@ -117,3 +116,5 @@ module.exports = {
   removeTask,
   updateTask,
 };
+
+export default dB;

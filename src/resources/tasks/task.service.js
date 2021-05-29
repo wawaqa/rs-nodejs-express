@@ -1,5 +1,5 @@
-const taskRepo = require('./task.memory.repository');
-const Task = require('./task.model');
+import {taskRepo} from './task.memory.repository.js';
+import Task from './task.model.js';
 
 const getAll = async (boardId) => taskRepo.getAll(boardId);
 
@@ -35,4 +35,4 @@ const update = async (taskData) => {
 
 const remove = async (id) => taskRepo.remove(id);
 
-module.exports = { getAll, get, create, update, remove };
+export const taskService = { getAll, get, create, update, remove };

@@ -1,5 +1,7 @@
-const router = require('express').Router({mergeParams:true});
-const taskService = require('./task.service');
+import {Router} from 'express';
+import { taskService } from './task.service.js';
+
+const router = Router({mergeParams:true});
 
 router.route('/').get(async (req, res) => {
   const { boardId } = req.params;
@@ -34,4 +36,4 @@ router.route('/:taskId').delete((req, res) => {
   res.sendStatus(204);
 });
 
-module.exports = router;
+export default router;

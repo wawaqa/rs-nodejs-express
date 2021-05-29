@@ -1,4 +1,4 @@
-const dB = require('../../common/inMemoryDb');
+import dB from '../../common/inMemoryDb.js';
 
 const getAll = async () => dB.getAllUsers();
 
@@ -10,4 +10,4 @@ const remove = async (id) => dB.removeUser(id);
 
 const update = async (user) => dB.updateUser(user);
 
-module.exports = { getAll, get, create, update, remove };
+export const userRepo = { getAll, get, create, update, remove };
