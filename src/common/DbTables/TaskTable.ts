@@ -2,7 +2,7 @@ import Task from '../../resources/tasks/task.model';
 import Table from './Table';
 
 class TaskTable extends Table<Task> {
-    getAllByBoardId = async (boardId: string): Promise<Task[]> =>
+    getAllByBoardId = async (boardId?: string): Promise<Task[]> =>
       this.records.filter((it) => it.boardId === boardId);
   
     removeTasksByBoard = async (id: string): Promise<void> => {

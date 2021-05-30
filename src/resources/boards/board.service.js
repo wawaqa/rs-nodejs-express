@@ -1,5 +1,7 @@
-import {boardRepo} from './board.memory.repository.js';
+import BoardRepo from './board.memory.repository';
 import Board from './board.model';
+
+const boardRepo=new BoardRepo()
 
 const getAll = async () => boardRepo.getAll();
 
