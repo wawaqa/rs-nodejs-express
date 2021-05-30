@@ -1,5 +1,5 @@
-import { userRepo } from './user.memory.repository.js';
-import User from './user.model.js';
+import { userRepo } from './user.memory.repository';
+import User from './user.model';
 
 const getAll = async () => {
   const users = await userRepo.getAll();

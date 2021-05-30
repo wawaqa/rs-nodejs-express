@@ -7,11 +7,11 @@ import userRouter from './resources/users/user.router.js';
 import boardRouter from './resources/boards/board.router.js';
 import taskRouter from './resources/tasks/task.router.js';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const filename = fileURLToPath(import.meta.url);
+const dirName = dirname(filename);
 
 const app = express();
-const swaggerDocument = YAML.load(path.join(__dirname, '../doc/api.yaml'));
+const swaggerDocument = YAML.load(path.join(dirName, '../doc/api.yaml'));
 
 app.use(express.json());
 

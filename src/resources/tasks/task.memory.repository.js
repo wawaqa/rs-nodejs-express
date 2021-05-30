@@ -1,4 +1,4 @@
-import dB from '../../common/inMemoryDb.js';
+import dB from '../../common/inMemoryDb';
 
 
 const getAll = async (boardId) => dB.getAllTasks(boardId);

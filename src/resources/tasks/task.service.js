@@ -1,5 +1,5 @@
-import {taskRepo} from './task.memory.repository.js';
-import Task from './task.model.js';
+import {taskRepo} from './task.memory.repository';
+import Task from './task.model';
 
 const getAll = async (boardId) => taskRepo.getAll(boardId);
 
