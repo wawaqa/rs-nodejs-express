@@ -1,6 +1,6 @@
-import {IServiceBasic} from '../Interfaces/IService';
-import { userRepo } from './user.memory.repository';
-import User, { IUserDTO } from './user.model';
+import {IServiceBasic} from '../Interfaces/IService.js';
+import { userRepo } from './user.memory.repository.js';
+import User, { IUserDTO } from './user.model.js';
 
 class UserService implements IServiceBasic<IUserDTO> {
   getAll = async (): Promise<IUserDTO[]> => {

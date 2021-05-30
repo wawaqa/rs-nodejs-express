@@ -1,9 +1,9 @@
-import User from '../resources/users/user.model';
-import Board from '../resources/boards/board.model';
-import Task from '../resources/tasks/task.model';
-import UserTable from "./DbTables/UserTable";
-import TaskTable from "./DbTables/TaskTable";
-import BoardTable from "./DbTables/BoardTable";
+import User from '../resources/users/user.model.js';
+import Board from '../resources/boards/board.model.js';
+import Task from '../resources/tasks/task.model.js';
+import UserTable from "./DbTables/UserTable.js";
+import TaskTable from "./DbTables/TaskTable.js";
+import BoardTable from "./DbTables/BoardTable.js";
 
 // initial state
 const boards = [

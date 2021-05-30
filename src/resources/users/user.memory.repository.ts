@@ -1,6 +1,6 @@
-import dB from '../../common/inMemoryDb';
-import IRepository from '../Interfaces/IRepository';
-import User from './user.model';
+import dB from '../../common/inMemoryDb.js';
+import IRepository from '../Interfaces/IRepository.js';
+import User from './user.model.js';
 
 class UserRepository implements IRepository<User> {
   getAll = async (): Promise<User[]> => dB.getAllUsers();

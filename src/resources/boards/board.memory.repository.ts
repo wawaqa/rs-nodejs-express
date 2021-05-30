@@ -1,6 +1,6 @@
-import dB from '../../common/inMemoryDb';
-import IRepository from '../Interfaces/IRepository';
-import Board from './board.model';
+import dB from '../../common/inMemoryDb.js';
+import IRepository from '../Interfaces/IRepository.js';
+import Board from './board.model.js';
 
 class BoardRepository implements IRepository<Board> {
   getAll = async () => dB.getAllBoards();

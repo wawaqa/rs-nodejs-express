@@ -16,9 +16,12 @@ router.route('/').post(async (req: Request, res: Response) => {
 
 router.route('/:id').get(async (req: Request, res: Response) => {
   const { id } = req.params;
-  const user = await userService.get(id);
-  if (user) res.json(user);
-  else res.sendStatus(404);
+  if (!id) res.sendStatus(404);
+  else {
+    const user = await userService.get(id);
+    if (user) res.json(user);
+    else res.sendStatus(404);
+  }
 });
 
 router.route('/:userId').put(async (req: Request, res: Response) => {
