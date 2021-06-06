@@ -1,20 +1,16 @@
 import { Request, Response } from 'express';
 
-type RecordType =
-  | 'info'
-  | 'error'
-  | 'uncaughtException'
-  | 'unhandledRejection';
+type RecordType = 'error' | 'uncaughtException' | 'info' | 'unhandledRejection';
 
 export interface ILogData {
-  level: RecordType;
+  recordType: RecordType;
   req?: Request;
   res?: Response;
   error?: Error;
 }
 
 export interface ILogRecord {
-  level: RecordType;
+  recordType: RecordType;
   date: Date;
   url?: string;
   queryParams?: string;
@@ -27,10 +23,10 @@ export function convertToLogRecord({
   req,
   res,
   error,
-  level,
+  recordType,
 }: ILogData): ILogRecord {
   let dataLog: ILogRecord = {
-    level,
+    recordType,
     date: new Date(),
   };
 

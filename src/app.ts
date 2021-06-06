@@ -29,7 +29,7 @@ app.use('/', (req, res, next) => {
 
 app.use('/', (req, res, next) => {
   next();
-  finished(res, () => logIt({ res, req, level: 'info' }));
+  finished(res, () => logIt({ res, req, recordType: 'info' }));
 });
 
 app.use('/users', userRouter);
@@ -38,28 +38,18 @@ app.use('/boards', boardRouter);
 
 app.use('/boards/:boardId/tasks/', taskRouter);
 
-// TODO remove after cross-check
-
-// app.use('/error', () => {
-//   throw new Error('error path');
-// });
-
-// setTimeout(() => {
-//   throw new Error('custom error');
-// }, 5000);
-
 app.use((error: Error, req: Request, res: Response, _next?: NextFunction) => {
   res.sendStatus(500);
-  finished(res, () => logIt({ res, req, error, level: 'error' }));
+  finished(res, () => logIt({ res, req, error, recordType: 'error' }));
 });
 
 process.on('uncaughtException', (error: Error) => {
-  logIt({ level: 'uncaughtException', error });
+  logIt({ recordType: 'uncaughtException', error });
   process.exit(1);
 });
 
 process.on('unhandledRejection', (error: Error) => {
-  logIt({ level: 'unhandledRejection', error });
+  logIt({ recordType: 'unhandledRejection', error });
 });
 
 export default app;
