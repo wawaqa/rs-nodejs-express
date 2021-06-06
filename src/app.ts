@@ -7,7 +7,7 @@ import { finished } from 'stream';
 import userRouter from './resources/users/user.router.js';
 import boardRouter from './resources/boards/board.router.js';
 import taskRouter from './resources/tasks/task.router.js';
-import { ILogData, writeToLog } from './logger/writeToLog.js';
+import { logIt } from './logger/index.js';
 
 const filename = fileURLToPath(import.meta.url);
 const dirName = dirname(filename);
@@ -29,17 +29,7 @@ app.use('/', (req, res, next) => {
 
 app.use('/', (req, res, next) => {
   next();
-  finished(res, () => {
-    const logData: ILogData = {
-      level: 'info',
-      date: new Date(),
-      url: req.originalUrl,
-      queryParams: JSON.stringify(req.query),
-      body: req.body,
-      statusCode: res.statusCode,
-    };
-    writeToLog(logData);
-  });
+  finished(res, () => logIt({ res, req, level: 'info' }));
 });
 
 app.use('/users', userRouter);
@@ -48,42 +38,28 @@ app.use('/boards', boardRouter);
 
 app.use('/boards/:boardId/tasks/', taskRouter);
 
-// TODO commment or remove after dev
-app.use('/error', () => {
-  throw new Error('error path');
-});
+// TODO remove after cross-check
 
-app.use((err: Error, req: Request, res: Response, _next?: NextFunction) => {
-  const logData: ILogData = {
-    level: 'error',
-    date: new Date(),
-    url: req.originalUrl,
-    queryParams: JSON.stringify(req.query),
-    body: req.body,
-    statusCode: res.statusCode,
-    error: err.stack,
-  };
-  writeToLog(logData);
+// app.use('/error', () => {
+//   throw new Error('error path');
+// });
+
+// setTimeout(() => {
+//   throw new Error('custom error');
+// }, 5000);
+
+app.use((error: Error, req: Request, res: Response, _next?: NextFunction) => {
   res.sendStatus(500);
+  finished(res, () => logIt({ res, req, error, level: 'error' }));
 });
 
-process.on('uncaughtException', (err: Error) => {
-  const logData: ILogData = {
-    level: 'uncaughtException',
-    date: new Date(),
-    error: err.stack,
-  };
-  writeToLog(logData);
+process.on('uncaughtException', (error: Error) => {
+  logIt({ level: 'uncaughtException', error });
   process.exit(1);
 });
 
-process.on('unhandledRejection', (err: Error) => {
-  const logData: ILogData = {
-    level: 'unhandledRejection',
-    date: new Date(),
-    error: err.stack,
-  };
-  writeToLog(logData);
+process.on('unhandledRejection', (error: Error) => {
+  logIt({ level: 'unhandledRejection', error });
 });
 
 export default app;

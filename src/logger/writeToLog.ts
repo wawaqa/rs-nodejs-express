@@ -1,13 +1,5 @@
-export interface ILogData {
-  level: 'info' | 'error' | 'uncaughtException' | 'unhandledRejection';
-  date: Date;
-  url?: string;
-  queryParams?: string;
-  body?: string;
-  statusCode?: number;
-  error?: string;
-}
+import { ILogRecord } from './dataLog';
 
-export function writeToLog(logData: ILogData): void {
-  console.log(logData);
+export function writeToLog(logRecord: ILogRecord): void {
+  console.log(logRecord);
 }
