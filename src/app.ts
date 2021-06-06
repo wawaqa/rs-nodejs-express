@@ -33,7 +33,7 @@ app.use('/', (req, res, next) => {
     const logData: ILogData = {
       level: 'info',
       date: new Date(),
-      url: req.url,
+      url: req.originalUrl,
       queryParams: JSON.stringify(req.query),
       body: req.body,
       statusCode: res.statusCode,
@@ -50,14 +50,14 @@ app.use('/boards/:boardId/tasks/', taskRouter);
 
 // TODO commment or remove after dev
 app.use('/error', () => {
-  throw new Error('error path')
+  throw new Error('error path');
 });
 
-app.use((err: Error, req: Request, res:Response, _next?:NextFunction) => {
+app.use((err: Error, req: Request, res: Response, _next?: NextFunction) => {
   const logData: ILogData = {
     level: 'error',
     date: new Date(),
-    url: req.url,
+    url: req.originalUrl,
     queryParams: JSON.stringify(req.query),
     body: req.body,
     statusCode: res.statusCode,
@@ -65,6 +65,25 @@ app.use((err: Error, req: Request, res:Response, _next?:NextFunction) => {
   };
   writeToLog(logData);
   res.sendStatus(500);
+});
+
+process.on('uncaughtException', (err: Error) => {
+  const logData: ILogData = {
+    level: 'uncaughtException',
+    date: new Date(),
+    error: err.stack,
+  };
+  writeToLog(logData);
+  process.exit(1);
+});
+
+process.on('unhandledRejection', (err: Error) => {
+  const logData: ILogData = {
+    level: 'unhandledRejection',
+    date: new Date(),
+    error: err.stack,
+  };
+  writeToLog(logData);
 });
 
 export default app;

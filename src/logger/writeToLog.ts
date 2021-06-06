@@ -1,10 +1,10 @@
 export interface ILogData {
   level: 'info' | 'error' | 'uncaughtException' | 'unhandledRejection';
   date: Date;
-  url: string;
-  queryParams: string;
-  body: string;
-  statusCode: number;
+  url?: string;
+  queryParams?: string;
+  body?: string;
+  statusCode?: number;
   error?: string;
 }
 
