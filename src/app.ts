@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { NextFunction, Request, Response } from 'express';
 import swaggerUI from 'swagger-ui-express';
 import YAML from 'yamljs';
 import path, { dirname } from 'path';
@@ -31,7 +31,8 @@ app.use('/', (req, res, next) => {
   next();
   finished(res, () => {
     const logData: ILogData = {
-      type: 'info',
+      level: 'info',
+      date: new Date(),
       url: req.url,
       queryParams: JSON.stringify(req.query),
       body: req.body,
@@ -46,5 +47,24 @@ app.use('/users', userRouter);
 app.use('/boards', boardRouter);
 
 app.use('/boards/:boardId/tasks/', taskRouter);
+
+// TODO commment or remove after dev
+app.use('/error', () => {
+  throw new Error('error path')
+});
+
+app.use((err: Error, req: Request, res:Response, _next?:NextFunction) => {
+  const logData: ILogData = {
+    level: 'error',
+    date: new Date(),
+    url: req.url,
+    queryParams: JSON.stringify(req.query),
+    body: req.body,
+    statusCode: res.statusCode,
+    error: err.stack,
+  };
+  writeToLog(logData);
+  res.sendStatus(500);
+});
 
 export default app;
