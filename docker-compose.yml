@@ -8,6 +8,9 @@ services:
             - postgres
         environment: 
             - PORT:${PORT}
+        volumes: 
+            - ./logs:/usr/app/logs:rw
+            - ./src:/usr/app/src
     postgres:
         build: ./database
         ports:
