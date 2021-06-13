@@ -1,6 +1,6 @@
-import IService from '../Interfaces/IService.js';
-import { boardRepo } from './board.memory.repository.js';
-import Board from './board.model.js';
+import IService from '../Interfaces/IService';
+import { boardRepo } from './board.memory.repository';
+import Board from './board.model';
 
 class BoardService implements IService<Board> {
   getAll = async (): Promise<Board[]> => boardRepo.getAll();

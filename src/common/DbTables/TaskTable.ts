@@ -1,5 +1,5 @@
-import Task from '../../resources/tasks/task.model.js';
-import Table from './Table.js';
+import Task from '../../resources/tasks/task.model';
+import Table from './Table';
 
 class TaskTable extends Table<Task> {
   getAllByBoardId = async (boardId?: string): Promise<Task[]> =>
