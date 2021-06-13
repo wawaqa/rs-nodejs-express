@@ -9,8 +9,9 @@ services:
         environment: 
             - PORT:${PORT}
         volumes: 
-            - ./logs:/usr/app/logs:rw
+            - ./logs:/usr/app/logs
             - ./src:/usr/app/src
+        restart: always
     postgres:
         build: ./database
         ports:
@@ -19,3 +20,5 @@ services:
             POSTGRES_USER: ${POSTGRES_USER}
             POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
             POSTGRES_DB: ${POSTGRES_DB}
+        volumes:
+            - ./postgresDB:/var/lib/postgresql/data:z

@@ -40,7 +40,7 @@ app.use((error: Error, req: Request, res: Response, _next?: NextFunction) => {
 });
 
 process.on('uncaughtException', (error: Error) => {
-  logIt({ recordType: 'uncaughtException', error }, 1);
+  logIt({ recordType: 'uncaughtException', error }, 2);
 });
 
 process.on('unhandledRejection', (error: Error) => {
