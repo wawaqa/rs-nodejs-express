@@ -1,3 +1,4 @@
+import { Entity, Column, PrimaryColumn } from 'typeorm';
 import { v4 as uuid } from 'uuid';
 
 export interface IUser {
@@ -12,14 +13,18 @@ export interface IUserDTO {
   name?: string;
   login?: string;
 }
-
+@Entity()
 class User implements IUser {
+  @PrimaryColumn({ type: 'uuid' })
   id: string;
 
+  @Column({ type: 'string' })
   name: string;
 
+  @Column({ type: 'string' })
   login: string;
 
+  @Column({ type: 'string' })
   password: string;
 
   constructor(userData: IUser) {

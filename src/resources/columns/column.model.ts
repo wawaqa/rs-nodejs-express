@@ -1,3 +1,4 @@
+import { Entity, Column as ColumnORM, PrimaryColumn } from 'typeorm';
 import { v4 as uuid } from 'uuid';
 
 export interface IColumn {
@@ -6,11 +7,15 @@ export interface IColumn {
   order: number;
 }
 
+@Entity()
 class Column implements IColumn {
+  @PrimaryColumn({ type: 'uuid' })
   id: string;
 
+  @ColumnORM({ type: 'string' })
   title: string;
 
+  @ColumnORM({ type: "int" })
   order: number;
 
   constructor({ id = uuid(), title = 'Column', order = 0 } = {}) {

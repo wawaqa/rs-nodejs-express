@@ -1,4 +1,5 @@
 import { v4 as uuid } from 'uuid';
+import { Entity, Column as ColumnORM, PrimaryColumn } from 'typeorm';
 import Column from '../columns/column.model';
 
 export interface IBoard {
@@ -7,11 +8,15 @@ export interface IBoard {
   columns?: Column[];
 }
 
+@Entity()
 class Board implements IBoard {
+  @PrimaryColumn({ type: 'uuid' })
   id: string;
 
+  @ColumnORM({ type: 'string' })
   title: string;
 
+  @ColumnORM({ type: 'uuid', array: true })
   columns: Column[];
 
   constructor(boardData: IBoard) {
