@@ -27,7 +27,7 @@ class User implements IUser {
   @Column('text')
   password: string;
 
-  constructor(userData: IUser) {
+  constructor(userData: IUser={}) {
     const {
       id = uuid(),
       name = 'USER',

@@ -1,6 +1,6 @@
 import {IServiceBasic} from '../Interfaces/IService';
-import { userRepo } from './user.memory.repository';
-import User, { IUserDTO } from './user.model';
+import { userRepo } from './user.repository';
+import User, { IUserDTO } from './user.entity';
 
 class UserService implements IServiceBasic<IUserDTO> {
   getAll = async (): Promise<IUserDTO[]> => {

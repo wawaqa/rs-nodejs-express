@@ -11,7 +11,7 @@ const typeOrmConfig = {
   database: config.POSTGRES_DB,
   synchronize: true,
   logging: false,
-  // entities: ['src/entity/**/*.ts'],
+  entities: ['src/resources/**/*.entity.ts'],
   // migrations: ['src/migration/**/*.ts'],
   // subscribers: ['src/subscriber/**/*.ts'],
 } as ConnectionOptions;
