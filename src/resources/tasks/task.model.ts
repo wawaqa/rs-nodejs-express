@@ -14,25 +14,25 @@ export interface ITask {
 
 @Entity()
 class Task implements ITask {
-  @PrimaryColumn({ type: 'uuid' })
+  @PrimaryColumn('uuid')
   id: string;
 
-  @Column({ type: 'string' })
+  @Column('text')
   title: string;
 
-  @Column({ type: "int" })
+  @Column('int')
   order: number;
 
-  @Column({ type: 'string' })
+  @Column('text')
   description: string;
 
   @Column({ type: 'uuid', nullable: true })
   userId: string | null;
 
-  @Column({ type: 'uuid'})
+  @Column('uuid')
   boardId: string;
 
-  @Column({ type: 'uuid'})
+  @Column('uuid')
   columnId: string;
 
   constructor(taskData: ITask) {

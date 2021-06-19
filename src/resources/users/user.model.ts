@@ -15,16 +15,16 @@ export interface IUserDTO {
 }
 @Entity()
 class User implements IUser {
-  @PrimaryColumn({ type: 'uuid' })
+  @PrimaryColumn('uuid')
   id: string;
 
-  @Column({ type: 'string' })
+  @Column('text')
   name: string;
 
-  @Column({ type: 'string' })
+  @Column('text')
   login: string;
 
-  @Column({ type: 'string' })
+  @Column('text')
   password: string;
 
   constructor(userData: IUser) {

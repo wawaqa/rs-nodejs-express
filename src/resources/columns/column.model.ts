@@ -9,10 +9,10 @@ export interface IColumn {
 
 @Entity()
 class Column implements IColumn {
-  @PrimaryColumn({ type: 'uuid' })
+  @PrimaryColumn('uuid')
   id: string;
 
-  @ColumnORM({ type: 'string' })
+  @ColumnORM('text')
   title: string;
 
   @ColumnORM({ type: "int" })

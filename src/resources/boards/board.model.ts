@@ -10,10 +10,10 @@ export interface IBoard {
 
 @Entity()
 class Board implements IBoard {
-  @PrimaryColumn({ type: 'uuid' })
+  @PrimaryColumn('uuid')
   id: string;
 
-  @ColumnORM({ type: 'string' })
+  @ColumnORM('text')
   title: string;
 
   @ColumnORM({ type: 'uuid', array: true })
