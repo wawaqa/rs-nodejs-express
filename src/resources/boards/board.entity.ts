@@ -1,6 +1,6 @@
 import { v4 as uuid } from 'uuid';
 import { Entity, Column as ColumnORM, PrimaryGeneratedColumn } from 'typeorm';
-import Column from '../columns/column.model';
+import Column from '../columns/column.entity';
 
 export interface IBoard {
   id?: string;
@@ -16,7 +16,6 @@ class Board implements IBoard {
   @ColumnORM('text')
   title = 'Board title';
 
-  @ColumnORM({ type: 'uuid', array: true, nullable: true })
   columns!: Column[];
   /*
   constructor(boardData: IBoard) {

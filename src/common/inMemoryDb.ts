@@ -1,5 +1,5 @@
 import User from '../resources/users/user.entity';
-import Board from '../resources/boards/board.model';
+import Board from '../resources/boards/board.entity';
 import Task from '../resources/tasks/task.entity';
 import UserTable from "./DbTables/UserTable";
 import TaskTable from "./DbTables/TaskTable";
@@ -7,17 +7,8 @@ import BoardTable from "./DbTables/BoardTable";
 
 // initial state
 const boards = [
-  new Board({
-    id: '11111111-1111-1111-1111-111111111111',
-    columns: [
-      {
-        id: '20000000-0000-0000-0000-000000000002',
-        title: 'real olumn',
-        order: 2,
-      },
-    ],
-  }),
-  new Board({ id: '11111111-2222-1111-1111-111111111111' }),
+  new Board(),
+  new Board(),
 ];
 const users = [
   new User(),
@@ -25,15 +16,7 @@ const users = [
   new User(),
 ];
 const tasks = [
-  new Task({
-    id: '10000000-0000-0000-0000-000000000001',
-    title: 'my 1st task',
-    order: 1,
-    description: 'go to bed',
-    userId: '00000000-0000-0000-0000-000000000001',
-    boardId: '11111111-1111-1111-1111-111111111111',
-    columnId: '20000000-0000-0000-0000-000000000002',
-  }),
+  new Task(),
 ];
 
 
