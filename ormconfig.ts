@@ -1,14 +1,18 @@
+import { ConnectionOptions } from 'typeorm';
+import config from './src/common/config';
+
 const typeOrmConfig = {
+  name: 'default',
   type: 'postgres',
-  host: process.env['POSTGRES_HOST'],
-  port:  process.env['POSTRES_PORT'],
-  username: process.env['POSTGRES_USER'],
-  password: process.env['POSTGRES_PASSWORD'],
-  database:  process.env['POSTGRES_DB'],
+  host: config.POSTGRES_HOST,
+  port: config.POSTGRES_PORT,
+  username: config.POSTGRES_USER,
+  password: config.POSTGRES_PASSWORD,
+  database: config.POSTGRES_DB,
   synchronize: true,
   logging: false,
   // entities: ['src/entity/**/*.ts'],
   // migrations: ['src/migration/**/*.ts'],
   // subscribers: ['src/subscriber/**/*.ts'],
-};
+} as ConnectionOptions;
 export default typeOrmConfig;
