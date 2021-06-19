@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 import { v4 as uuid } from 'uuid';
 
 export interface IUser {
@@ -15,30 +15,17 @@ export interface IUserDTO {
 }
 @Entity()
 class User implements IUser {
-  @PrimaryColumn('uuid')
-  id: string;
+  @PrimaryGeneratedColumn('uuid')
+  id: string = uuid();
 
   @Column('text')
-  name: string;
+  name = 'name';
 
   @Column('text')
-  login: string;
+  login = 'user';
 
   @Column('text')
-  password: string;
-
-  constructor(userData: IUser={}) {
-    const {
-      id = uuid(),
-      name = 'USER',
-      login = 'user',
-      password = 'P@55w0rd',
-    } = userData;
-    this.id = id;
-    this.name = name;
-    this.login = login;
-    this.password = password;
-  }
+  password = 'pswrd';
 
   static toResponse(user: IUser): IUserDTO {
     const { id, name, login } = user;

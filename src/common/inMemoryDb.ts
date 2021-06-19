@@ -20,9 +20,9 @@ const boards = [
   new Board({ id: '11111111-2222-1111-1111-111111111111' }),
 ];
 const users = [
-  new User({ id: '00000000-0000-0000-0000-000000000001' }),
-  new User({ id: '00000000-0000-0000-0000-000000000002' }),
-  new User({}),
+  new User(),
+  new User(),
+  new User(),
 ];
 const tasks = [
   new Task({

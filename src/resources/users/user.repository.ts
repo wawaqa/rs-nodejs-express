@@ -1,4 +1,3 @@
-// import dB from '../../common/inMemoryDb';
 import { getRepository } from 'typeorm';
 import IRepository from '../Interfaces/IRepository';
 import User from './user.entity';
@@ -17,21 +16,22 @@ class UserRepository implements IRepository<User> {
 
   create = async (user: User): Promise<User | undefined> => {
     const repo = getRepository(User);
-    await repo.insert(user);
-    return user;
+    const newUser = repo.create(user);
+    await repo.insert(newUser);
+    return newUser;
   };
 
   remove = async (id: string): Promise<void> => {
     const repo = getRepository(User);
     // const taskRepo = getRepository(Task);
-    repo.delete(id);
+    await repo.delete(id);
     // taskRepo.update({ userId: id }, { userId: null });
   };
 
   update = async (user: User): Promise<User | undefined> => {
     const repo = getRepository(User);
-    repo.update({ id: user.id }, { ...user });
-    return user;
+    await repo.update({ id: user.id }, { ...user });
+    return repo.findOne(user.id);
   };
 }
 
