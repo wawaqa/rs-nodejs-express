@@ -1,6 +1,6 @@
 const typeOrmConfig = {
   type: 'postgres',
-  host: 'postgres',
+  host: process.env['POSTGRES_HOST'],
   port:  process.env['POSTRES_PORT'],
   username: process.env['POSTGRES_USER'],
   password: process.env['POSTGRES_PASSWORD'],
