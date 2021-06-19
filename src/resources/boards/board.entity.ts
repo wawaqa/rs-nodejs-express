@@ -1,5 +1,5 @@
 import { v4 as uuid } from 'uuid';
-import { Entity, Column as ColumnORM, PrimaryColumn } from 'typeorm';
+import { Entity, Column as ColumnORM, PrimaryGeneratedColumn } from 'typeorm';
 import Column from '../columns/column.model';
 
 export interface IBoard {
@@ -10,21 +10,22 @@ export interface IBoard {
 
 @Entity()
 class Board implements IBoard {
-  @PrimaryColumn('uuid')
-  id: string;
+  @PrimaryGeneratedColumn('uuid')
+  id = uuid();
 
   @ColumnORM('text')
-  title: string;
+  title = 'Board title';
 
-  @ColumnORM({ type: 'uuid', array: true })
-  columns: Column[];
-
+  @ColumnORM({ type: 'uuid', array: true, nullable: true })
+  columns!: Column[];
+  /*
   constructor(boardData: IBoard) {
     const { id = uuid(), title = 'Board', columns = [] } = boardData;
     this.id = id;
     this.title = title;
     this.columns = columns.map((columnData) => new Column(columnData));
   }
+  */
 }
 
 export default Board;

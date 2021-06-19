@@ -1,7 +1,7 @@
 import { getRepository } from 'typeorm';
 import IRepository from '../Interfaces/IRepository';
 import User from './user.entity';
-// import Task from '../tasks/task.model';
+import Task from '../tasks/task.entity';
 
 class UserRepository implements IRepository<User> {
   getAll = async (): Promise<User[]> => {
@@ -23,9 +23,9 @@ class UserRepository implements IRepository<User> {
 
   remove = async (id: string): Promise<void> => {
     const repo = getRepository(User);
-    // const taskRepo = getRepository(Task);
+    const taskRepo = getRepository(Task);
     await repo.delete(id);
-    // taskRepo.update({ userId: id }, { userId: null });
+    taskRepo.update({ userId: id }, { userId: null });
   };
 
   update = async (user: User): Promise<User | undefined> => {

@@ -1,6 +1,6 @@
 import User from '../resources/users/user.entity';
 import Board from '../resources/boards/board.model';
-import Task from '../resources/tasks/task.model';
+import Task from '../resources/tasks/task.entity';
 import UserTable from "./DbTables/UserTable";
 import TaskTable from "./DbTables/TaskTable";
 import BoardTable from "./DbTables/BoardTable";

@@ -16,7 +16,6 @@ class UserService implements IServiceBasic<IUserDTO> {
 
   create = async (userData: User): Promise<IUserDTO | undefined> => {
     const createdUser = await userRepo.create(userData);
-    console.log('CREATED', createdUser);
     if (createdUser) return User.toResponse(createdUser);
     return undefined;
   };

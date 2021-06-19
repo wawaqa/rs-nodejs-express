@@ -1,4 +1,4 @@
-import Task from '../../resources/tasks/task.model';
+import Task from '../../resources/tasks/task.entity';
 import Table from './Table';
 
 class TaskTable extends Table<Task> {
