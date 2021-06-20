@@ -18,10 +18,9 @@ export function writeToLog(
   logRecord: ILogRecord,
   exitOnFinishCode: number | undefined
 ): void {
-  if (errorRecordTypes.includes(logRecord.recordType)) logger.error(logRecord);
-  else logger.info(logRecord);
-  if (exitOnFinishCode !== undefined)
-    logger.on('finish', () => {
-      process.exit(exitOnFinishCode);
+  if (errorRecordTypes.includes(logRecord.recordType))
+    Promise.resolve(logger.error(logRecord)).then(() => {
+      if (exitOnFinishCode !== undefined) process.exit(exitOnFinishCode);
     });
+  logger.info(logRecord);
 }

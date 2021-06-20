@@ -1,6 +1,6 @@
-import dB from '../../common/inMemoryDb.js';
-import IRepository from '../Interfaces/IRepository.js';
-import Task from './task.model.js';
+import dB from '../../common/inMemoryDb';
+import IRepository from '../Interfaces/IRepository';
+import Task from './task.model';
 
 class TaskRepository implements IRepository<Task> {
   getAll = async (id?: string): Promise<Task[]> => dB.getAllTasks(id);

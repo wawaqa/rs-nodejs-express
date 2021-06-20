@@ -1,5 +1,5 @@
-import User from '../../resources/users/user.model.js';
-import Table from './Table.js';
+import User from '../../resources/users/user.model';
+import Table from './Table';
 
 class UserTable extends Table<User> {}
 

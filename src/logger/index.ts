@@ -1,5 +1,5 @@
-import { ILogData, convertToLogRecord } from './dataLog.js';
-import { writeToLog } from './writeToLog.js';
+import { ILogData, convertToLogRecord } from './dataLog';
+import { writeToLog } from './writeToLog';
 
 export function logIt(logData: ILogData, exitOnFinishCode?: number): void {
   const logRecord = convertToLogRecord(logData);

@@ -1,5 +1,5 @@
 import { Request, Response, Router } from 'express';
-import { taskService } from './task.service.js';
+import { taskService } from './task.service';
 
 const router = Router({ mergeParams: true });
 

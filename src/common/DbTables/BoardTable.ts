@@ -1,5 +1,5 @@
-import Board from '../../resources/boards/board.model.js';
-import Table from './Table.js';
+import Board from '../../resources/boards/board.model';
+import Table from './Table';
 
 class BoardTable extends Table<Board> {}
 

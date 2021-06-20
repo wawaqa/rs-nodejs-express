@@ -1,6 +1,6 @@
-import { taskRepo } from './task.memory.repository.js';
-import Task from './task.model.js';
-import IService from '../Interfaces/IService.js';
+import { taskRepo } from './task.memory.repository';
+import Task from './task.model';
+import IService from '../Interfaces/IService';
 
 class TaskService implements IService<Task> {
   getAll = async (boardId?: string): Promise<Task[]> => taskRepo.getAll(boardId);
