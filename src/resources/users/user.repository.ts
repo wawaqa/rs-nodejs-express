@@ -25,7 +25,7 @@ class UserRepository implements IRepository<User> {
     const repo = getRepository(User);
     const taskRepo = getRepository(Task);
     await repo.delete(id);
-    taskRepo.update({ userId: id }, { userId: null });
+    await taskRepo.update({ userId: id }, { userId: null });
   };
 
   update = async (user: User): Promise<User | undefined> => {
