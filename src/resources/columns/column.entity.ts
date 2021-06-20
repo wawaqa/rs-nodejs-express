@@ -1,5 +1,12 @@
-import { Entity, Column as ColumnORM, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Entity,
+  Column as ColumnORM,
+  PrimaryGeneratedColumn,
+  ManyToOne
+} from 'typeorm';
 import { v4 as uuid } from 'uuid';
+// eslint-disable-next-line import/no-cycle
+import Board from '../boards/board.entity';
 
 export interface IColumn {
   id?: string;
@@ -18,8 +25,10 @@ class Column implements IColumn {
   @ColumnORM({ type: 'int' })
   order = 0;
 
-  @ColumnORM('uuid')
-  boardId=uuid()
+  @ManyToOne(() => Board, (board) => board.columns, {
+    createForeignKeyConstraints: false,
+  })
+  board!: Board;
 }
 
 export default Column;

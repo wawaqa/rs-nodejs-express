@@ -1,6 +1,9 @@
 import { v4 as uuid } from 'uuid';
-import { Entity, Column as ColumnORM, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column as ColumnORM, PrimaryGeneratedColumn, OneToMany, JoinColumn } from 'typeorm';
+// eslint-disable-next-line import/no-cycle
 import Column from '../columns/column.entity';
+// import Task from '../tasks/task.entity';
+
 
 export interface IBoard {
   id?: string;
@@ -16,7 +19,13 @@ class Board implements IBoard {
   @ColumnORM('text')
   title = 'Board title';
 
-  columns!: Column[];
+  @OneToMany(()=>Column, column=>column.board, {cascade: true, onDelete:"CASCADE", onUpdate:"CASCADE"})
+  @JoinColumn()
+  columns!: Column[]
+  /*
+  @OneToMany(()=>Task, task=>task.board, {cascade: true, onDelete:"CASCADE", onUpdate:"CASCADE"})
+  tasks!: Task[];
+  */
   /*
   constructor(boardData: IBoard) {
     const { id = uuid(), title = 'Board', columns = [] } = boardData;

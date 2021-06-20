@@ -33,7 +33,7 @@ class Task implements ITask {
   boardId!: string;
 
   // TODO relationship
-  @Column('uuid')
+  @Column({type:'uuid', nullable: true})
   columnId!: string;
 }
 
