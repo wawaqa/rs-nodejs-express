@@ -9,6 +9,7 @@ const connectToDb = async (): Promise<void> => {
 
   if (connection) {
     if (!connection.isConnected) await connection.connect();
+    await connection.runMigrations()
   }
 };
 

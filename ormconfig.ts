@@ -11,7 +11,7 @@ const typeOrmConfig = {
   synchronize: false,
   logging: false,
   entities: ['src/resources/**/*.entity.ts'],
-  migrations: ['src/migration/**/*.ts'],
+  migrations: ['src/migrations/**/*.ts'],
   cli: {
     migrationsDir: 'src/migrations',
   },
