@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 import { getConnection, createConnection } from 'typeorm';
 import typeOrmConfig from '../../ormconfig';
-
+import config from "../common/config"
 
 const connectToDb = async (): Promise<void> => {
   try {
@@ -18,7 +18,7 @@ const connectToDb = async (): Promise<void> => {
   }
 };
 
-const maxReconnectCount=5;
+const maxReconnectCount=config.MAX_RECONNECT_COUNT||10;
 
 export const tryConnectToDb = async (callback: () => void, reconnectCount=0): Promise<void> => {
   try {

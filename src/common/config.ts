@@ -16,6 +16,7 @@ const {
   POSTGRES_PASSWORD,
   POSTGRES_DB,
   POSTGRES_HOST,
+  MAX_RECONNECT_COUNT
 } = process.env;
 
 const config = {
@@ -29,6 +30,7 @@ const config = {
   POSTGRES_PASSWORD,
   POSTGRES_DB,
   POSTGRES_HOST: POSTGRES_HOST || 'localhost',
+  MAX_RECONNECT_COUNT
 };
 
 export default config;
