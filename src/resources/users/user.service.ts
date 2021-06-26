@@ -1,3 +1,4 @@
+import { hash } from 'bcrypt';
 import { IServiceBasic } from '../Interfaces/IService';
 import { userRepo } from './user.repository';
 import User, { IUserDTO } from './user.entity';
@@ -15,13 +16,15 @@ class UserService implements IServiceBasic<IUserDTO> {
   };
 
   create = async (userData: User): Promise<IUserDTO | undefined> => {
-    const createdUser = await userRepo.create(userData);
+    const password = await hash(userData?.password || 'pwd123!', 12);
+    const createdUser = await userRepo.create({ ...userData, password });
     if (createdUser) return User.toResponse(createdUser);
     return undefined;
   };
 
   update = async (userData: User): Promise<IUserDTO | undefined> => {
-    const updatedUser = await userRepo.update(userData);
+    const password = await hash(userData?.password || 'pwd123!', 12);
+    const updatedUser = await userRepo.update({ ...userData, password });
     if (updatedUser) return User.toResponse(updatedUser);
     return undefined;
   };
