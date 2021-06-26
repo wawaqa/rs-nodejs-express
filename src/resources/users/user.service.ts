@@ -1,4 +1,4 @@
-import { hash } from 'bcrypt';
+import { hash, compare } from 'bcrypt';
 import { IServiceBasic } from '../Interfaces/IService';
 import { userRepo } from './user.repository';
 import User, { IUserDTO } from './user.entity';
@@ -30,6 +30,14 @@ class UserService implements IServiceBasic<IUserDTO> {
   };
 
   remove = async (id: string): Promise<void> => userRepo.remove(id);
+
+  authenticate = async (userData: Partial<User>):Promise<boolean> => {
+    const { login = '', password = '' } = userData;
+    if (!login || !password) return false;
+    const user = await userRepo.getByLogin(login);
+    const match = user && (await compare(password, user.password));
+    return !!match;
+  };
 }
 
 export const userService = new UserService();

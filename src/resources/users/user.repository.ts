@@ -33,6 +33,12 @@ class UserRepository implements IRepository<User> {
     await repo.update(user.id, user);
     return repo.findOne(user.id);
   };
+
+  getByLogin = async (login: string) => {
+    const repo = getRepository(User);
+    const user = await repo.findOne({ login });
+    return user;
+  };
 }
 
 export const userRepo = new UserRepository();

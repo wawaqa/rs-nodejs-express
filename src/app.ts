@@ -6,6 +6,7 @@ import { finished } from 'stream';
 import userRouter from './resources/users/user.router';
 import boardRouter from './resources/boards/board.router';
 import taskRouter from './resources/tasks/task.router';
+import loginRouter from './authentication/login.router';
 import { logIt } from './logger/index';
 
 const app = express();
@@ -27,6 +28,8 @@ app.use('/', (req, res, next) => {
   next();
   finished(res, () => logIt({ res, req, recordType: 'info' }));
 });
+
+app.use('/login', loginRouter);
 
 app.use('/users', userRouter);
 
