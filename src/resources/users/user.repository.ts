@@ -34,7 +34,7 @@ class UserRepository implements IRepository<User> {
     return repo.findOne(user.id);
   };
 
-  getByLogin = async (login: string) => {
+  getByLogin = async (login: string): Promise<User | void> => {
     const repo = getRepository(User);
     const user = await repo.findOne({ login });
     return user;

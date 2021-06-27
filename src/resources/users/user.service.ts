@@ -31,12 +31,13 @@ class UserService implements IServiceBasic<IUserDTO> {
 
   remove = async (id: string): Promise<void> => userRepo.remove(id);
 
-  authenticate = async (userData: Partial<User>):Promise<boolean> => {
+  authenticate = async (userData: Partial<User>): Promise<void | User> => {
     const { login = '', password = '' } = userData;
-    if (!login || !password) return false;
+    if (!login || !password) return undefined;
     const user = await userRepo.getByLogin(login);
     const match = user && (await compare(password, user.password));
-    return !!match;
+    const authenticatedUser = match ? user : undefined;
+    return authenticatedUser;
   };
 }
 
