@@ -3,6 +3,7 @@ import swaggerUI from 'swagger-ui-express';
 import YAML from 'yamljs';
 import path from 'path';
 import { finished } from 'stream';
+import { ReasonPhrases, StatusCodes } from 'http-status-codes';
 import userRouter from './resources/users/user.router';
 import boardRouter from './resources/boards/board.router';
 import taskRouter from './resources/tasks/task.router';
@@ -41,7 +42,9 @@ app.use('/boards', boardRouter);
 app.use('/boards/:boardId/tasks/', taskRouter);
 
 app.use((error: Error, req: Request, res: Response, _next?: NextFunction) => {
-  res.sendStatus(500);
+  res
+    .status(StatusCodes.INTERNAL_SERVER_ERROR)
+    .send({ Error: ReasonPhrases.INTERNAL_SERVER_ERROR });
   finished(res, () => logIt({ res, req, error, recordType: 'error' }));
 });
 

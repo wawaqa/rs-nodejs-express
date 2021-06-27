@@ -1,5 +1,6 @@
 import { Request, Response, Router } from 'express';
 import jwt from 'jsonwebtoken';
+import { ReasonPhrases, StatusCodes } from 'http-status-codes';
 import { userService } from '../resources/users/user.service';
 import config from '../common/config';
 
@@ -16,7 +17,7 @@ router.route('/').post(async (req: Request, res: Response) => {
     );
     res.send({ token });
   } else {
-    res.sendStatus(403);
+    res.status(StatusCodes.FORBIDDEN).send({ Error: ReasonPhrases.FORBIDDEN });
   }
 });
 
