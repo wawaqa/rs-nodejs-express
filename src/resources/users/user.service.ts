@@ -16,6 +16,8 @@ class UserService implements IServiceBasic<IUserDTO> {
   };
 
   create = async (userData: User): Promise<IUserDTO | undefined> => {
+    const existingUser=await userRepo.getByLogin(userData?.login);
+    if (existingUser) return undefined;
     const password = await hash(userData?.password || 'pwd123!', 12);
     const createdUser = await userRepo.create({ ...userData, password });
     if (createdUser) return User.toResponse(createdUser);

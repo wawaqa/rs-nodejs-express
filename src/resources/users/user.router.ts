@@ -11,7 +11,10 @@ router.route('/').get(async (_req: Request, res: Response) => {
 router.route('/').post(async (req: Request, res: Response) => {
   const userData = req.body;
   const newUser = await userService.create(userData);
-  res.status(201).json(newUser);
+  if (newUser) res.status(201).json(newUser);
+  res
+    .status(400)
+    .send('Error when creating user, user with such login may already exist');
 });
 
 router.route('/:id').get(async (req: Request, res: Response) => {
