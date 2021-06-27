@@ -21,7 +21,7 @@ class User implements IUser {
   @Column('text')
   name = 'name';
 
-  @Column('text')
+  @Column({type:'text', unique: true})
   login = 'user';
 
   @Column('text')
