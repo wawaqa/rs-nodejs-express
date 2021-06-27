@@ -6,13 +6,17 @@
     "url": ""
   },
   "description": "REST service starter for RS School",
-  "main": "build/server.js",
+  "main": "build/src/server.js",
   "scripts": {
-    "start:prod": "tsc && node build/server.js",
-    "start": "nodemon --exitcrash src/server.ts",
+    "start:prod": "tsc && node build/src/server.js",
+    "start": "nodemon --exitcrash --legacy-watch src/server.ts",
     "lint": "eslint --ext .js,.ts --fix src/",
     "test": "cross-env DEBUG=rs:* jest --testMatch \"<rootDir>/test/e2e/test/*.test.js\" --noStackTrace --runInBand",
-    "test:auth": "cross-env DEBUG=rs:* TEST_MODE=auth jest --noStackTrace"
+    "test:auth": "cross-env DEBUG=rs:* TEST_MODE=auth jest --noStackTrace",
+    "typeorm": "ts-node ./node_modules/typeorm/cli.js --config=ormconfig.ts",
+    "db:generate": "npm run typeorm migration:generate -- -n expressDBMigration",
+    "db:setup": "npm run typeorm migration:run",
+    "db:revert": "npm run typeorm migration:revert"
   },
   "keywords": [
     "rs",
@@ -47,8 +51,11 @@
     "cross-env": "7.0.3",
     "dotenv": "9.0.0",
     "express": "4.17.1",
+    "pg": "^8.6.0",
+    "reflect-metadata": "^0.1.13",
     "swagger-ui-express": "4.1.6",
     "ts-node": "^10.0.0",
+    "typeorm": "^0.2.34",
     "uuid": "8.3.2",
     "winston": "^3.3.3",
     "yamljs": "0.3.0"

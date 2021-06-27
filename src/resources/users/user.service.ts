@@ -1,6 +1,6 @@
-import {IServiceBasic} from '../Interfaces/IService';
-import { userRepo } from './user.memory.repository';
-import User, { IUserDTO } from './user.model';
+import { IServiceBasic } from '../Interfaces/IService';
+import { userRepo } from './user.repository';
+import User, { IUserDTO } from './user.entity';
 
 class UserService implements IServiceBasic<IUserDTO> {
   getAll = async (): Promise<IUserDTO[]> => {
@@ -15,17 +15,13 @@ class UserService implements IServiceBasic<IUserDTO> {
   };
 
   create = async (userData: User): Promise<IUserDTO | undefined> => {
-    const { name, login, password } = userData;
-    const newUser = new User({ name, login, password });
-    const createdUser = await userRepo.create(newUser);
+    const createdUser = await userRepo.create(userData);
     if (createdUser) return User.toResponse(createdUser);
     return undefined;
   };
 
   update = async (userData: User): Promise<IUserDTO | undefined> => {
-    const { name, login, password, id } = userData;
-    const user = new User({ name, login, password, id });
-    const updatedUser = await userRepo.update(user);
+    const updatedUser = await userRepo.update(userData);
     if (updatedUser) return User.toResponse(updatedUser);
     return undefined;
   };
