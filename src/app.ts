@@ -8,6 +8,7 @@ import boardRouter from './resources/boards/board.router';
 import taskRouter from './resources/tasks/task.router';
 import loginRouter from './authentication/login.router';
 import { logIt } from './logger/index';
+import { authenticate } from './authentication/authenticate';
 
 const app = express();
 const swaggerDocument = YAML.load(path.join(__dirname, '../doc/api.yaml'));
@@ -30,6 +31,8 @@ app.use('/', (req, res, next) => {
 });
 
 app.use('/login', loginRouter);
+
+app.use(authenticate);
 
 app.use('/users', userRouter);
 

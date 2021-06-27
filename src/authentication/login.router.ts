@@ -11,10 +11,10 @@ router.route('/').post(async (req: Request, res: Response) => {
   if (authenticatedUser) {
     const token = jwt.sign(
       { login, userId: authenticatedUser.id },
-      config.JWT_SECRET_KEY || 'default-secret-key',
+      config.JWT_SECRET_KEY,
       { expiresIn: 3600 }
     );
-    res.send(token);
+    res.send({ token: `Bearer <${token}>` });
   } else {
     res.sendStatus(403);
   }
