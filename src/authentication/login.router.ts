@@ -14,7 +14,7 @@ router.route('/').post(async (req: Request, res: Response) => {
       config.JWT_SECRET_KEY,
       { expiresIn: 3600 }
     );
-    res.send({ token: `Bearer <${token}>` });
+    res.send({ token });
   } else {
     res.sendStatus(403);
   }

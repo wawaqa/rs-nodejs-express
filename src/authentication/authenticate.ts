@@ -8,7 +8,7 @@ export function authenticate(
   next: NextFunction
 ): void {
   const rawToken = req.get('Authorization');
-  const tokenMatch = rawToken?.match(/(?<=Bearer <)(.*?)(?=>)/g);
+  const tokenMatch = rawToken?.match(/(?<=Bearer )(.*)/g);
   if (!tokenMatch || tokenMatch.length !== 1 || !tokenMatch[0]) {
     res.sendStatus(401);
     return;
