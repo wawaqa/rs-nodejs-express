@@ -30,8 +30,14 @@ class UserRepository implements IRepository<User> {
 
   update = async (user: User): Promise<User | undefined> => {
     const repo = getRepository(User);
-    await repo.update({ id: user.id }, { ...user });
+    await repo.update(user.id, user);
     return repo.findOne(user.id);
+  };
+
+  getByLogin = async (login: string): Promise<User | void> => {
+    const repo = getRepository(User);
+    const user = await repo.findOne({ login });
+    return user;
   };
 }
 

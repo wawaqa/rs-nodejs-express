@@ -1,4 +1,5 @@
 import { Request, Response, Router } from 'express';
+import { ReasonPhrases, StatusCodes } from 'http-status-codes';
 import { boardService } from './board.service';
 
 const router = Router();
@@ -16,11 +17,15 @@ router.route('/').post(async (req: Request, res: Response) => {
 
 router.route('/:id').get(async (req: Request, res: Response) => {
   const { id } = req.params;
-  if (!id) res.sendStatus(404);
+  if (!id)
+    res.status(StatusCodes.NOT_FOUND).send({ Error: ReasonPhrases.NOT_FOUND });
   else {
     const board = await boardService.get(id);
     if (board) res.json(board);
-    else res.sendStatus(404);
+    else
+      res
+        .status(StatusCodes.NOT_FOUND)
+        .send({ Error: ReasonPhrases.NOT_FOUND });
   }
 });
 
@@ -33,10 +38,13 @@ router.route('/:boardId').put(async (req: Request, res: Response) => {
 
 router.route('/:boardId').delete(async (req: Request, res: Response) => {
   const { boardId } = req.params;
-  if (!boardId) res.sendStatus(404);
+  if (!boardId)
+    res.status(StatusCodes.NOT_FOUND).send({ Error: ReasonPhrases.NOT_FOUND });
   else {
     await boardService.remove(boardId);
-    res.sendStatus(204);
+    res
+      .status(StatusCodes.NO_CONTENT)
+      .send({ Error: ReasonPhrases.NO_CONTENT });
   }
 });
 
