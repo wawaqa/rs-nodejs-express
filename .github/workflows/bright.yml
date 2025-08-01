@@ -1,0 +1,77 @@
+name: Bright
+
+on:
+  pull_request:
+    branches:
+      - '*'
+
+permissions:
+  checks: write
+  contents: read
+  id-token: write
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js 14.x
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Cache node modules
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-14-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-14-
+
+      - name: Install application dependencies
+        run: npm ci
+
+      - name: Start application
+        env:
+          PORT: ${{ secrets.PORT }}
+          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+        run: docker compose up --wait
+
+      - name: Verify application readiness
+        run: |
+          for i in {1..10}; do
+            nc -zv 127.0.0.1 3000 && echo "Application is ready" && exit 0
+            echo "Waiting for application to be ready..."
+            sleep 5
+          done
+          echo "Application did not become ready in time" && exit 1
+
+      - name: Set up Node.js 22.x
+        uses: actions/setup-node@v2
+        with:
+          node-version: '22'
+
+      - name: Install SecTesterJS dependencies
+        run: npm i --save=false --prefix .brightsec @sectester/core @sectester/repeater @sectester/scan @sectester/runner @sectester/reporter
+
+      - name: Configure Bright credentials
+        uses: ./.github/workflows/composite/configure-bright-credentials
+        with:
+          BRIGHT_HOSTNAME: development.playground.brightsec.com
+          BRIGHT_PROJECT_ID: 4dCoai5EzZHRBsPHUrpzNq
+          BRIGHT_TOKEN: ${{ secrets.BRIGHT_TOKEN }}
+
+      - name: Run security tests
+        env:
+          BRIGHT_HOSTNAME: development.playground.brightsec.com
+          BRIGHT_PROJECT_ID: 4dCoai5EzZHRBsPHUrpzNq
+          BRIGHT_AUTH_ID: ${{ vars.BRIGHT_AUTH_ID }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRIGHT_TOKEN: ${{ env.BRIGHT_TOKEN }}
+          BRIGHT_TARGET_URL: http://127.0.0.1:3000
+        run: node --experimental-transform-types --experimental-strip-types --experimental-detect-module --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --disable-warning=ExperimentalWarning --test-force-exit --test-concurrency=4 --test .brightsec/tests/*.test.ts
