@@ -7,7 +7,7 @@ services:
     depends_on:
       - postgres
     environment:
-      - PORT:${PORT}
+      - PORT: ${PORT}
     volumes:
       - ./logs:/usr/app/logs
       - ./src:/usr/app/src
