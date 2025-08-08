@@ -1,0 +1,79 @@
+```yaml
+name: Bright
+
+on:
+  pull_request:
+    branches:
+      - '*'
+
+permissions:
+  checks: write
+  contents: read
+  id-token: write
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js 14.x
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Cache Node.js modules
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-14-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-14-
+            ${{ runner.os }}-
+
+      - name: Install application dependencies
+        run: npm ci
+
+      - name: Ensure .env file exists
+        run: |
+          if [ ! -f .env ]; then
+            echo "Environment file (.env) is missing!"
+            exit 1
+          fi
+
+      - name: Start application
+        run: docker compose up --wait
+
+      - name: Wait for application to be ready
+        run: |
+          until nc -zv 127.0.0.1 3000; do
+            echo "Waiting for application to be ready..."
+            sleep 5
+          done
+
+      - name: Set up Node.js 22.x
+        uses: actions/setup-node@v2
+        with:
+          node-version: '22'
+
+      - name: Install SecTesterJS dependencies
+        run: npm i --save=false --prefix .brightsec @sectester/core @sectester/repeater @sectester/scan @sectester/runner @sectester/reporter
+
+      - name: Configure Bright credentials
+        uses: ./.github/workflows/composite/configure-bright-credentials
+        with:
+          BRIGHT_HOSTNAME: development.playground.brightsec.com
+          BRIGHT_PROJECT_ID: 72iCQJvs6wKRrYXkdszjyT
+          BRIGHT_TOKEN: ${{ secrets.BRIGHT_TOKEN }}
+
+      - name: Run security tests
+        env:
+          BRIGHT_HOSTNAME: development.playground.brightsec.com
+          BRIGHT_PROJECT_ID: 72iCQJvs6wKRrYXkdszjyT
+          BRIGHT_AUTH_ID: ${{ vars.BRIGHT_AUTH_ID }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRIGHT_TOKEN: ${{ env.BRIGHT_TOKEN }}
+          BRIGHT_TARGET_URL: http://127.0.0.1:3000
+        run: node --experimental-transform-types --experimental-strip-types --experimental-detect-module --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --disable-warning=ExperimentalWarning --test-force-exit --test-concurrency=4 --test .brightsec/tests/*.test.ts
+```
